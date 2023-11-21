@@ -6,28 +6,23 @@ import java.awt.Graphics2D
 import java.awt.image.BufferedImage
 import java.nio.file.Files
 import java.nio.file.Path
-import java.util.*
 import javax.imageio.ImageIO
-import kotlin.math.abs
 
 object AvatarShowing {
-    fun showAvatar(avatar: Avatar) {
-        showAvatar(avatar, 4, 1)
+    fun showAvatar(vararg avatars: Avatar.AvatarBuilder) {
+        showAvatar(8, 2, avatars = avatars)
     }
 
-    fun showAvatar(avatar: Avatar, w: Int, h: Int) {
-        val size: Int = avatar.width
+    fun showAvatar(w: Int, h: Int, size: Int = 128, vararg avatars: Avatar.AvatarBuilder) {
+        avatars.forEach { it.size(size, size) }
         val dest = BufferedImage(size * w, size * h, BufferedImage.TYPE_INT_ARGB)
         val graphics2D: Graphics2D = dest.createGraphics()
         AvatarUtil.activeAntialiasing(graphics2D)
-        val random = Random(10)
         for (y in 0 until h) {
             for (x in 0 until w) {
-                val code = abs(random.nextLong().toDouble()).toLong()
-                graphics2D.drawImage(avatar.create(code), x * size, y * size, size, size, null)
-                print("$code, ")
-                //g2.setColor(Color.RED);
-                //g2.drawRect(x * 128, y * 128, 128, 128);
+                val random = (Long.MIN_VALUE..Long.MAX_VALUE).random()
+                graphics2D.drawImage(avatars.random().build().create(random), x * size, y * size, size, size, null)
+                print("$random, ")
             }
             println()
         }
