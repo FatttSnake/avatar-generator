@@ -21,6 +21,7 @@ class URLElementRegistry : AbstractElementRegistry() {
          * @param path who is png files
          * @return list of url
          */
+        @JvmStatic
         fun lsPngURLs(classLoader: ClassLoader, path: String?): List<URL> {
             val reflections = Reflections(path, Scanners.Resources, classLoader)
             val ss: Set<String> = reflections.getResources(PNG_PATTERN)

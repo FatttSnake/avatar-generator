@@ -5,7 +5,7 @@ import top.fatweb.avatargenerator.util.AvatarUtil
 import java.awt.image.BufferedImage
 
 class GithubElementRegistry(private val size: Int, private val precision: Int) : AbstractImageElementRegistry() {
-    constructor() : this(400, 3)
+    constructor() : this(400, 5)
 
     override fun buildImage(avatarInfo: IAvatarInfo): BufferedImage {
         val dest = BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB)
