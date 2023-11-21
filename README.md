@@ -194,3 +194,9 @@ val bufferedImage = avatar.create(seed)
 Avatar avatar = GitHubAvatar.newAvatarBuilder().build();
 BufferedImage bufferedImage = avatar.create(seed);
 ```
+
+## Related projects
+
+---
+
++ [Avatar Generator](https://github.com/gabrie-allaigre/avatar-generator) - An avatar generator written in Java, but it has not been updated for a long time and has certain problems. Current project refers to it, rewrites it in Kotlin, and corrects some issues.
