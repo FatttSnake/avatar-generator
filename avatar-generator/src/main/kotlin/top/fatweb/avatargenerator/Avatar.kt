@@ -194,6 +194,8 @@ class Avatar private constructor() {
             return this
         }
 
+        fun size(size: Int) = size(size, size)
+
         /**
          * Set size of avatar
          * Default is 128x128
@@ -306,6 +308,7 @@ class Avatar private constructor() {
     }
 
     companion object {
+        @JvmStatic
         fun newBuilder(): AvatarBuilder {
             return AvatarBuilder()
         }
