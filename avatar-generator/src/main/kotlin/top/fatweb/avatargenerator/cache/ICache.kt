@@ -12,6 +12,7 @@ interface ICache {
     fun get(avatarInfo: IAvatarInfo, loader: ILoader): BufferedImage
 
     companion object {
+        @JvmStatic
         fun tempCache(): ICache {
             val memoryCache = MemoryCache()
             val fileCache = FileCache()
@@ -27,6 +28,7 @@ interface ICache {
             }
         }
 
+        @JvmStatic
         fun defaultCache(rootPath: Path): ICache {
             val memoryCache = MemoryCache()
             val fileCache = FileCache(rootPath)
