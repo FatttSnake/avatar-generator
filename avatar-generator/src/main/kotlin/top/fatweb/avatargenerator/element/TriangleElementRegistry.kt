@@ -1,13 +1,19 @@
-package top.fatweb.avatargenerator
+package top.fatweb.avatargenerator.element
 
 import com.jhlabs.image.ShadowFilter
-import top.fatweb.avatargenerator.element.AbstractImageElementRegistry
+import top.fatweb.avatargenerator.IAvatarInfo
 import top.fatweb.avatargenerator.util.AvatarUtil
 import java.awt.Color
 import java.awt.Polygon
 import java.awt.image.BufferedImage
 import kotlin.math.max
 
+/**
+ * Element registry for Triangle style avatar
+ *
+ * @author FatttSnake, fatttsnake@gmail.com
+ * @since 1.0.0
+ */
 class TriangleElementRegistry(
     private val precision: Int,
     private val colors: List<Color>

@@ -11,6 +11,13 @@ import java.util.regex.Pattern
 import java.util.stream.Collectors
 import javax.imageio.ImageIO
 
+/**
+ * URL element registry
+ *
+ * @author FatttSnake, fatttsnake@gmail.com
+ * @since 1.0.0
+ * @see AbstractElementRegistry
+ */
 class URLElementRegistry : AbstractElementRegistry() {
     companion object {
         private val PNG_PATTERN = Pattern.compile(".*.png")
@@ -18,8 +25,12 @@ class URLElementRegistry : AbstractElementRegistry() {
         /**
          * Load all urls with png
          *
-         * @param path who is png files
+         * @param path where is png files
          * @return list of url
+         * @author FatttSnake, fatttsnake@gmail.com
+         * @since 1.0.0
+         * @see ClassLoader
+         * @see URL
          */
         @JvmStatic
         fun lsPngURLs(classLoader: ClassLoader, path: String?): List<URL> {
@@ -51,6 +62,15 @@ class URLElementRegistry : AbstractElementRegistry() {
         }
     }
 
+    /**
+     * Put element
+     *
+     * @param name
+     * @param urls
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     * @see URL
+     */
     fun putElement(name: String, urls: List<URL>?) {
         elementMap[name] = if (urls != null) ArrayList<URL>(urls) else null
     }

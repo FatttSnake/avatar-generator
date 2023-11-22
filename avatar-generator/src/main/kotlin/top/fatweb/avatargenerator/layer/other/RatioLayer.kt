@@ -5,7 +5,16 @@ import top.fatweb.avatargenerator.layer.ILayer
 import top.fatweb.avatargenerator.util.AvatarUtil
 import java.awt.image.BufferedImage
 
-class RatioLayer(var ratio: Double) : ILayer {
+/**
+ * Ratio layer
+ *
+ * @author FatttSnake, fatttsnake@gmail.com
+ * @since 1.0.0
+ * @see ILayer
+ */
+class RatioLayer(
+    var ratio: Double
+) : ILayer {
     override fun apply(avatarInfo: IAvatarInfo, src: BufferedImage): BufferedImage {
         var width = src.width
         var height = src.height

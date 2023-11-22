@@ -10,6 +10,12 @@ import java.awt.geom.Rectangle2D
 import java.awt.image.BufferedImage
 import kotlin.math.floor
 
+/**
+ * Nine block renderer of indenticon
+ *
+ * @author FatttSnake, fatttsnake@gmail.com
+ * @since 1.0.0
+ */
 open class NineBlockIdenticonRenderer {
     private val PATCH_GRIDS = 5
 
@@ -70,6 +76,12 @@ open class NineBlockIdenticonRenderer {
 
     private var patchOffset = 0f
 
+    /**
+     * Size of patch
+     *
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     */
     var patchSize = 0f
         set(value) {
             field = value
@@ -100,27 +112,42 @@ open class NineBlockIdenticonRenderer {
             }
         }
 
-
+    /**
+     * Background color of nine block
+     *
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     */
     var backgroundColor = Color.WHITE
 
     init {
         patchSize = DEFAULT_PATCH_SIZE
     }
 
-    fun render(code: Int, size: Int) = renderQuilt(code, size)
+    /**
+     * Render image
+     *
+     * @param seed
+     * @param size
+     * @return image
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     * @see BufferedImage
+     */
+    fun render(seed: Int, size: Int) = renderQuilt(seed, size)
 
-    protected fun renderQuilt(code: Int, size: Int): BufferedImage {
-        val middleType: Int = this.centerPatchTypes[code and 0x3]
-        val middleInvert = code shr 2 and 0x1 != 0
-        val cornerType = code shr 3 and 0x0f
-        val cornerInvert = code shr 7 and 0x1 != 0
-        var cornerTurn = code shr 8 and 0x3
-        val sideType = code shr 10 and 0x0f
-        val sideInvert = code shr 14 and 0x1 != 0
-        var sideTurn = code shr 15 and 0x3
-        val blue = code shr 16 and 0x01f
-        val green = code shr 21 and 0x01f
-        val red = code shr 27 and 0x01f
+    protected fun renderQuilt(seed: Int, size: Int): BufferedImage {
+        val middleType: Int = this.centerPatchTypes[seed and 0x3]
+        val middleInvert = seed shr 2 and 0x1 != 0
+        val cornerType = seed shr 3 and 0x0f
+        val cornerInvert = seed shr 7 and 0x1 != 0
+        var cornerTurn = seed shr 8 and 0x3
+        val sideType = seed shr 10 and 0x0f
+        val sideInvert = seed shr 14 and 0x1 != 0
+        var sideTurn = seed shr 15 and 0x3
+        val blue = seed shr 16 and 0x01f
+        val green = seed shr 21 and 0x01f
+        val red = seed shr 27 and 0x01f
 
         val fillColor = Color(red shl 3, green shl 3, blue shl 3)
 

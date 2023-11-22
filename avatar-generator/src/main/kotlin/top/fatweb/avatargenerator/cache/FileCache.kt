@@ -1,6 +1,7 @@
 package top.fatweb.avatargenerator.cache
 
 import top.fatweb.avatargenerator.IAvatarInfo
+import top.fatweb.avatargenerator.cache.ICache.ILoader
 import java.awt.image.BufferedImage
 import java.io.IOException
 import java.nio.file.Files
@@ -8,9 +9,22 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import javax.imageio.ImageIO
 
+/**
+ * File base cache
+ *
+ * @author FatttSnake, fatttsnake@gmail.com
+ * @since 1.0.0
+ * @see ICache
+ */
 class FileCache : ICache {
     private val rootPathDir: Path
 
+    /**
+     * Constructor of FileCache
+     *
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     */
     constructor() : super() {
         try {
             this.rootPathDir = Files.createTempDirectory("avatar")
@@ -19,10 +33,30 @@ class FileCache : ICache {
         }
     }
 
+    /**
+     * Constructor of FileCache
+     *
+     * @param rootPathDir
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     * @see Path
+     */
     constructor(rootPathDir: Path) : super() {
         this.rootPathDir = rootPathDir
     }
 
+    /**
+     * Get cache content
+     *
+     * @param avatarInfo
+     * @param loader
+     * @return image
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     * @see IAvatarInfo
+     * @see ILoader
+     * @see BufferedImage
+     */
     override fun get(avatarInfo: IAvatarInfo, loader: ICache.ILoader): BufferedImage {
         val dir =
             "${avatarInfo.getWidth()}-${avatarInfo.getHeight()}-${avatarInfo.getMargin()}-${avatarInfo.getPadding()}"
@@ -36,7 +70,7 @@ class FileCache : ICache {
             }
         }
 
-        val imageName = "${avatarInfo.getCode()}.png"
+        val imageName = "${avatarInfo.getSeed()}.png"
         val imagePath = Paths.get(path.toString(), imageName)
 
         if (Files.exists(imagePath)) {

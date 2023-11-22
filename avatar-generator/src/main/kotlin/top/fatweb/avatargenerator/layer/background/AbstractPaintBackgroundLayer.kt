@@ -6,6 +6,13 @@ import top.fatweb.avatargenerator.util.AvatarUtil
 import java.awt.Paint
 import java.awt.image.BufferedImage
 
+/**
+ * Abstract class for paint background layer
+ *
+ * @author FatttSnake, fatttsnake@gmail.com
+ * @since 1.0.0
+ * @see ILayer
+ */
 abstract class AbstractPaintBackgroundLayer : ILayer {
     override fun apply(avatarInfo: IAvatarInfo, src: BufferedImage): BufferedImage {
         val width = src.width
