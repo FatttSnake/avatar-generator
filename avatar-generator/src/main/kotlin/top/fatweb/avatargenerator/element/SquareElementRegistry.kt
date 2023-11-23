@@ -5,6 +5,13 @@ import top.fatweb.avatargenerator.util.AvatarUtil
 import java.awt.Color
 import java.awt.image.BufferedImage
 
+/**
+ * Element registry for Square style avatar
+ *
+ * @author FatttSnake, fatttsnake@gmail.com
+ * @since 1.0.0
+ * @see AbstractImageElementRegistry
+ */
 class SquareElementRegistry(
     private val precision: Int,
     private val colors: List<Color>

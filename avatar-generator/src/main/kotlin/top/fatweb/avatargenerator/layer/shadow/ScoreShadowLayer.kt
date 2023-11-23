@@ -4,6 +4,13 @@ import top.fatweb.avatargenerator.IAvatarInfo
 import java.awt.Color
 import java.awt.image.BufferedImage
 
+/**
+ * Score shadow layer
+ *
+ * @author FatttSnake, fatttsnake@gmail.com
+ * @since 1.0.0
+ * @see AbstractShadowLayer
+ */
 class ScoreShadowLayer(var shadowColor: Color) : AbstractShadowLayer(false) {
     constructor() : this(Color(0, 0, 0, 24))
 

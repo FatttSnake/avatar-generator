@@ -5,6 +5,13 @@ import top.fatweb.avatargenerator.layer.ILayer
 import top.fatweb.avatargenerator.util.AvatarUtil
 import java.awt.image.BufferedImage
 
+/**
+ * Abstract class for shadow layer
+ *
+ * @author FatttSnake, fatttsnake@gmail.com
+ * @since 1.0.0
+ * @see ILayer
+ */
 abstract class AbstractShadowLayer(private val first: Boolean) : ILayer {
     override fun apply(avatarInfo: IAvatarInfo, src: BufferedImage): BufferedImage {
         val width = src.width

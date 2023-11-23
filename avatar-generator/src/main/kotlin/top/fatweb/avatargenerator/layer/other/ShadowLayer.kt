@@ -6,6 +6,13 @@ import top.fatweb.avatargenerator.layer.ILayer
 import top.fatweb.avatargenerator.util.AvatarUtil
 import java.awt.image.BufferedImage
 
+/**
+ * Shadow layer
+ *
+ * @author FatttSnake, fatttsnake@gmail.com
+ * @since 1.0.0
+ * @see ILayer
+ */
 class ShadowLayer : ILayer {
     private val size: Int
     private val shadowFilter: ShadowFilter

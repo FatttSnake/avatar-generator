@@ -7,6 +7,13 @@ import java.awt.RadialGradientPaint
 import java.awt.image.BufferedImage
 import kotlin.math.sqrt
 
+/**
+ * Radial paint background layer
+ *
+ * @author FatttSnake, fatttsnake@gmail.com
+ * @since 1.0.0
+ * @see AbstractPaintBackgroundLayer
+ */
 class RadialPaintBackgroundLayer : AbstractPaintBackgroundLayer {
     private val inColor: Color
     private val outColor: Color

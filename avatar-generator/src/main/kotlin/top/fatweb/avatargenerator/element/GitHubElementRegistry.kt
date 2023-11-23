@@ -4,14 +4,21 @@ import top.fatweb.avatargenerator.IAvatarInfo
 import top.fatweb.avatargenerator.util.AvatarUtil
 import java.awt.image.BufferedImage
 
-class GithubElementRegistry(private val size: Int, private val precision: Int) : AbstractImageElementRegistry() {
+/**
+ * Element registry for GitHub style avatar
+ *
+ * @author FatttSnake, fatttsnake@gmail.com
+ * @since 1.0.0
+ * @see AbstractImageElementRegistry
+ */
+class GitHubElementRegistry(private val size: Int, private val precision: Int) : AbstractImageElementRegistry() {
     constructor() : this(400, 5)
 
     override fun buildImage(avatarInfo: IAvatarInfo): BufferedImage {
         val dest = BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB)
         val graphics2D = dest.createGraphics()
         AvatarUtil.activeAntialiasing(graphics2D)
-        graphics2D.color = AvatarUtil.extractColor(avatarInfo.getCode())
+        graphics2D.color = AvatarUtil.extractColor(avatarInfo.getSeed())
 
         val multi = size / (precision * 2 - 1)
         for (x in 0 until precision) {

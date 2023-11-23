@@ -1,4 +1,5 @@
 # Avatar Generator in Kotlin
+
 ![Release](https://img.shields.io/github/v/release/FatttSnake/avatar-generator)
 ![License](https://img.shields.io/github/license/FatttSnake/avatar-generator)
 ---
@@ -105,6 +106,7 @@ avatar.create...()
 ## Example
 
 #### Kotlin
+
 ```kotlin
 val seed = (Long.MIN_VALUE..Long.MAX_VALUE).random()
 
@@ -125,8 +127,9 @@ avatar.createAsPngToFile(seed, file)
 ```
 
 ### Java
+
 ```java
-Avatar avatar = Avatar.newBuilder()
+Avatar avatar=Avatar.newBuilder()
         .elementRegistry()
         .size()
         .margin()
@@ -136,67 +139,93 @@ Avatar avatar = Avatar.newBuilder()
         .colorizeFunction()
         .cache()
         .build();
-BufferedImage bufferedImage = avatar.create(seed);
-byte[] pngBytes = avatar.createAsPngBytes(seed);
-avatar.createAsPngToFile(seed, file);
+        BufferedImage bufferedImage=avatar.create(seed);
+        byte[]pngBytes=avatar.createAsPngBytes(seed);
+        avatar.createAsPngToFile(seed,file);
 ```
 
 ## Predefined avatar
+
 ### Triangle
+
 ![image](doc/triangle.png)
+
 #### Kotlin
+
 ```kotlin
 val seed = (Long.MIN_VALUE..Long.MAX_VALUE).random()
 val avatar = TriangleAvatar.newAvatarBuilder().build()
 val bufferedImage = avatar.create(seed)
 ```
+
 #### Java
+
 ```java
-Avatar avatar = TriangleAvatar.newAvatarBuilder().build();
-BufferedImage bufferedImage = avatar.create(seed);
+Avatar avatar=TriangleAvatar.newAvatarBuilder().build();
+        BufferedImage bufferedImage=avatar.create(seed);
 ```
+
 ### Square
+
 ![image](doc/square.png)
+
 #### Kotlin
+
 ```kotlin
 val seed = (Long.MIN_VALUE..Long.MAX_VALUE).random()
 val avatar = SquareAvatar.newAvatarBuilder().build()
 val bufferedImage = avatar.create(seed)
 ```
+
 #### Java
+
 ```java
-Avatar avatar = SquareAvatar.newAvatarBuilder().build();
-BufferedImage bufferedImage = avatar.create(seed);
+Avatar avatar=SquareAvatar.newAvatarBuilder().build();
+        BufferedImage bufferedImage=avatar.create(seed);
 ```
+
 ### Identicon
+
 ![image](doc/identicon.png)
+
 #### Kotlin
+
 ```kotlin
 val seed = (Long.MIN_VALUE..Long.MAX_VALUE).random()
 val avatar = IdenticonAvatar.newAvatarBuilder().build()
 val bufferedImage = avatar.create(seed)
 ```
+
 #### Java
+
 ```java
-Avatar avatar = IdenticonAvatar.newAvatarBuilder().build();
-BufferedImage bufferedImage = avatar.create(seed);
+Avatar avatar=IdenticonAvatar.newAvatarBuilder().build();
+        BufferedImage bufferedImage=avatar.create(seed);
 ```
+
 ### GitHub
+
 ![image](doc/github.png)
+
 #### Kotlin
+
 ```kotlin
 val seed = (Long.MIN_VALUE..Long.MAX_VALUE).random()
 val avatar = GitHubAvatar.newAvatarBuilder().build()
 val bufferedImage = avatar.create(seed)
 ```
+
 #### Java
+
 ```java
-Avatar avatar = GitHubAvatar.newAvatarBuilder().build();
-BufferedImage bufferedImage = avatar.create(seed);
+Avatar avatar=GitHubAvatar.newAvatarBuilder().build();
+        BufferedImage bufferedImage=avatar.create(seed);
 ```
 
 ## Related projects
 
 ---
 
-+ [Avatar Generator](https://github.com/gabrie-allaigre/avatar-generator) - An avatar generator written in Java, but it has not been updated for a long time and has certain problems. Current project refers to it, rewrites it in Kotlin, and corrects some issues.
++ [Avatar Generator](https://github.com/gabrie-allaigre/avatar-generator) - An avatar generator written in Java, but it
+  has not been updated for a long time and has certain problems. Current project refers to it, rewrites it in Kotlin,
+  and corrects some issues.
