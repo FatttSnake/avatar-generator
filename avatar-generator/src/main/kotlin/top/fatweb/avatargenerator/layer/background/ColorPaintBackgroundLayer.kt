@@ -5,6 +5,13 @@ import java.awt.Color
 import java.awt.Paint
 import java.awt.image.BufferedImage
 
+/**
+ * Color paint background layer
+ *
+ * @author FatttSnake, fatttsnake@gmail.com
+ * @since 1.0.0
+ * @see AbstractPaintBackgroundLayer
+ */
 class ColorPaintBackgroundLayer : AbstractPaintBackgroundLayer {
     private val color: Color
 

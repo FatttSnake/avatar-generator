@@ -5,6 +5,13 @@ import top.fatweb.avatargenerator.util.AvatarUtil
 import java.awt.Color
 import java.awt.image.BufferedImage
 
+/**
+ * Round rect mask layer
+ *
+ * @author FatttSnake, fatttsnake@gmail.com
+ * @since 1.0.0
+ * @see AbstractMaskLayer
+ */
 class RoundRectMaskLayer : AbstractMaskLayer {
     private val percent: Double
 

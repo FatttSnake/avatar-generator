@@ -13,15 +13,46 @@ import java.io.IOException
 import javax.imageio.ImageIO
 import kotlin.random.Random
 
+/**
+ * Avatar Generator main class
+ *
+ * @author FatttSnake, fatttsnake@gmail.com
+ * @since 1.0.0
+ */
 class Avatar private constructor() {
+    /**
+     * Width of final image
+     *
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     */
     var width = 128
         private set
+    /**
+     * Height of final image
+     *
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     */
     var height = 128
         private set
-    var padding = 0
-        private set
+    /**
+     * Margin of final image
+     *
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     */
     var margin = 0
         private set
+    /**
+     * Padding of final image
+     *
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     */
+    var padding = 0
+        private set
+
     private var elementRegistry: ElementRegistry? = null
     private var colorizeFunction: IColorizeFunction? = null
     private var layers: List<ILayer>? = null
@@ -30,12 +61,15 @@ class Avatar private constructor() {
     /**
      * Create avatar image
      *
-     * @param code the code
+     * @param seed the seed to generate avatar
      * @return image
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     * @see BufferedImage
      */
-    fun create(code: Long): BufferedImage {
-        val random = Random(code)
-        val avatarInfo: IAvatarInfo = MyAvatarInfo(code, random)
+    fun create(seed: Long): BufferedImage {
+        val random = Random(seed)
+        val avatarInfo: IAvatarInfo = MyAvatarInfo(seed, random)
         return if (cache != null) {
             cache!!.get(avatarInfo, object : ICache.ILoader {
                 override fun load(avatarInfo: IAvatarInfo): BufferedImage {
@@ -50,33 +84,39 @@ class Avatar private constructor() {
     /**
      * Create avatar image as png bytes
      *
-     * @param code the code
+     * @param seed the seed to generate avatar
      * @return byte array
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     * @see ByteArray
      */
-    fun createAsPngBytes(code: Long): ByteArray {
-        val src = create(code)
+    fun createAsPngBytes(seed: Long): ByteArray {
+        val src = create(seed)
         try {
             ByteArrayOutputStream().use { baos ->
                 ImageIO.write(src, "png", baos)
                 return baos.toByteArray()
             }
         } catch (e: IOException) {
-            throw AvatarException("Failed to write png for code=$code", e)
+            throw AvatarException("Failed to write png for seed=$seed", e)
         }
     }
 
     /**
      * Create avatar image as png to file
      *
-     * @param code the code
+     * @param seed the seed to generate avatar
      * @param file file to write png
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     * @see File
      */
-    fun createAsPngToFile(code: Long, file: File?) {
-        val src = create(code)
+    fun createAsPngToFile(seed: Long, file: File?) {
+        val src = create(seed)
         try {
             ImageIO.write(src, "png", file)
         } catch (e: IOException) {
-            throw AvatarException("Failed to write png for code=$code", e)
+            throw AvatarException("Failed to write png for seed=$seed", e)
         }
     }
 
@@ -165,6 +205,12 @@ class Avatar private constructor() {
         g2.drawImage(img, x, y, w, h, null)
     }
 
+    /**
+     * Public interface for define function to colorize elements
+     *
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     */
     interface IColorizeFunction {
         /**
          * Get color for element
@@ -172,10 +218,20 @@ class Avatar private constructor() {
          * @param avatarInfo current avatarInfo
          * @param element    name of element
          * @return color
+         * @author FatttSnake, fatttsnake@gmail.com
+         * @since 1.0.0
+         * @see IAvatarInfo
+         * @see Color
          */
         fun colorize(avatarInfo: IAvatarInfo?, element: String?): Color?
     }
 
+    /**
+     * Public interface for build avatar
+     *
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     */
     class AvatarBuilder internal constructor() {
         private var width = 128
         private var height = 128
@@ -187,18 +243,43 @@ class Avatar private constructor() {
         private var cache: ICache? = null
 
         /**
-         * Element loader
+         * Registry element
+         *
+         * @param elementRegistry
+         * @return avatar builder
+         * @author FatttSnake, fatttsnake@gmail.com
+         * @since 1.0.0
+         * @see ElementRegistry
+         * @see AvatarBuilder
+         *
          */
         fun elementRegistry(elementRegistry: ElementRegistry?): AvatarBuilder {
             this.elementRegistry = elementRegistry
             return this
         }
 
+        /**
+         * Set size of avatar
+         * Default is 128*128
+         *
+         * @param size
+         * @return avatar builder
+         * @author FatttSnake, fatttsnake@gmail.com
+         * @since 1.0.0
+         * @see AvatarBuilder
+         */
         fun size(size: Int) = size(size, size)
 
         /**
          * Set size of avatar
-         * Default is 128x128
+         * Default is 128*128
+         *
+         * @param width
+         * @param height
+         * @return avatar builder
+         * @author FatttSnake, fatttsnake@gmail.com
+         * @since 1.0.0
+         * @see AvatarBuilder
          */
         fun size(width: Int, height: Int): AvatarBuilder {
             this.width = width
@@ -207,17 +288,14 @@ class Avatar private constructor() {
         }
 
         /**
-         * Set space with border
+         * Set margin of avatar in pixel
          * Default is 8
-         */
-        fun padding(padding: Int): AvatarBuilder {
-            this.padding = padding
-            return this
-        }
-
-        /**
-         * Set space out border
-         * Default is 8
+         *
+         * @param margin
+         * @return avatar builder
+         * @author FatttSnake, fatttsnake@gmail.com
+         * @since 1.0.0
+         * @see AvatarBuilder
          */
         fun margin(margin: Int): AvatarBuilder {
             this.margin = margin
@@ -225,7 +303,29 @@ class Avatar private constructor() {
         }
 
         /**
-         * Apply layers after
+         * Set padding of avatar in pixel
+         * Default is 8
+         *
+         * @param padding
+         * @return avatar builder
+         * @author FatttSnake, fatttsnake@gmail.com
+         * @since 1.0.0
+         * @see AvatarBuilder
+         */
+        fun padding(padding: Int): AvatarBuilder {
+            this.padding = padding
+            return this
+        }
+
+        /**
+         * Add layers to apply in elements
+         *
+         * @param layers
+         * @return avatar builder
+         * @author FatttSnake, fatttsnake@gmail.com
+         * @since 1.0.0
+         * @see ILayer
+         * @see AvatarBuilder
          */
         fun layers(vararg layers: ILayer): AvatarBuilder {
             this.layers = layers.toList()
@@ -233,7 +333,14 @@ class Avatar private constructor() {
         }
 
         /**
-         * Color of element
+         * Set the color of all elements
+         *
+         * @param color
+         * @return avatar builder
+         * @author FatttSnake, fatttsnake@gmail.com
+         * @since 1.0.0
+         * @see Color
+         * @see AvatarBuilder
          */
         fun color(color: Color?): AvatarBuilder {
             return colorizeFunction(object : IColorizeFunction {
@@ -244,13 +351,30 @@ class Avatar private constructor() {
         }
 
         /**
-         * Color of element
+         * Set the color of element
+         *
+         * @param colorizeFunction
+         * @return avatar builder
+         * @author FatttSnake, fatttsnake@gmail.com
+         * @since 1.0.0
+         * @see IColorizeFunction
+         * @see AvatarBuilder
          */
         fun colorizeFunction(colorizeFunction: IColorizeFunction?): AvatarBuilder {
             this.colorizeFunction = colorizeFunction
             return this
         }
 
+        /**
+         * Set cache
+         *
+         * @param cache
+         * @return avatar builder
+         * @author FatttSnake, fatttsnake@gmail.com
+         * @since 1.0.0
+         * @see ICache
+         * @see AvatarBuilder
+         */
         fun cache(cache: ICache?): AvatarBuilder {
             this.cache = cache
             return this
@@ -258,6 +382,11 @@ class Avatar private constructor() {
 
         /**
          * Build image
+         *
+         * @return avatar
+         * @author FatttSnake, fatttsnake@gmail.com
+         * @since 1.0.0
+         * @see Avatar
          */
         fun build(): Avatar {
             val avatar = Avatar()
@@ -281,9 +410,9 @@ class Avatar private constructor() {
         val offsetY: Int
     )
 
-    private inner class MyAvatarInfo(private val codeValue: Long, private val randomValue: Random) : IAvatarInfo {
-        override fun getCode(): Long {
-            return codeValue
+    private inner class MyAvatarInfo(private val seedValue: Long, private val randomValue: Random) : IAvatarInfo {
+        override fun getSeed(): Long {
+            return seedValue
         }
 
         override fun getRandom(): Random {
@@ -308,6 +437,14 @@ class Avatar private constructor() {
     }
 
     companion object {
+        /**
+         * Create new builder
+         *
+         * @return avatar builder
+         * @author FatttSnake, fatttsnake@gmail.com
+         * @since 1.0.0
+         * @see AvatarBuilder
+         */
         @JvmStatic
         fun newBuilder(): AvatarBuilder {
             return AvatarBuilder()

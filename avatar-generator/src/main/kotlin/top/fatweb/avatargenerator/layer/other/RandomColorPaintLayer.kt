@@ -6,6 +6,13 @@ import top.fatweb.avatargenerator.util.AvatarUtil
 import java.awt.Color
 import java.awt.image.BufferedImage
 
+/**
+ * Random color paint layer
+ *
+ * @author FatttSnake, fatttsnake@gmail.com
+ * @since 1.0.0
+ * @see ILayer
+ */
 class RandomColorPaintLayer : ILayer {
     private val colors: List<Color>
     private val blackColor: Color
@@ -20,7 +27,7 @@ class RandomColorPaintLayer : ILayer {
     }
 
     override fun apply(avatarInfo: IAvatarInfo, src: BufferedImage): BufferedImage {
-        val backColor = colors[(avatarInfo.getCode() % colors.size).toInt()]
+        val backColor = colors[(avatarInfo.getSeed() % colors.size).toInt()]
         val foreColor = AvatarUtil.getComplementColor(backColor, blackColor, whiteColor)
         val width = src.width
         val height = src.height

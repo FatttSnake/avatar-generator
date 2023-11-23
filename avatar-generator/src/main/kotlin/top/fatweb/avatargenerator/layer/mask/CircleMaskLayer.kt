@@ -5,6 +5,13 @@ import top.fatweb.avatargenerator.util.AvatarUtil
 import java.awt.Color
 import java.awt.image.BufferedImage
 
+/**
+ * Circle mask layer
+ *
+ * @author FatttSnake, fatttsnake@gmail.com
+ * @since 1.0.0
+ * @see AbstractMaskLayer
+ */
 class CircleMaskLayer : AbstractMaskLayer() {
     override fun buildMask(avatarInfo: IAvatarInfo, src: BufferedImage): BufferedImage {
         val width = src.width

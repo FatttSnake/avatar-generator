@@ -8,8 +8,20 @@ import java.nio.file.Path
 import javax.imageio.ImageIO
 import kotlin.math.sqrt
 
+/**
+ * Util for avatar
+ *
+ * @author FatttSnake, fatttsnake@gmail.com
+ * @since 1.0.0
+ */
 object AvatarUtil {
-    val defaultColors = listOf<Color>(
+    /**
+     * Default colors
+     *
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     */
+    val defaultColors = listOf(
         Color(0x6e1e78),
         Color(0x82be00),
         Color(0xa1006b),
@@ -22,6 +34,14 @@ object AvatarUtil {
         Color(0xd2e100)
     )
 
+    /**
+     * Active antialiasing
+     *
+     * @param graphics2D
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     * @see Graphics2D
+     */
     fun activeAntialiasing(graphics2D: Graphics2D) {
         graphics2D.setRenderingHints(
             mapOf(
@@ -34,6 +54,17 @@ object AvatarUtil {
         )
     }
 
+    /**
+     * Resize image
+     *
+     * @param src
+     * @param width
+     * @param height
+     * @return image
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     * @see BufferedImage
+     */
     fun resizeImage(src: BufferedImage, width: Int, height: Int): BufferedImage {
         val originalWidth = src.width
         val originalHeight = src.height
@@ -63,6 +94,17 @@ object AvatarUtil {
         return dest
     }
 
+    /**
+     * Fill image with color
+     *
+     * @param src
+     * @param color
+     * @return image
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     * @see Color
+     * @see BufferedImage
+     */
     fun fillColorImage(src: BufferedImage, color: Color): BufferedImage {
         val width = src.width
         val height = src.height
@@ -78,6 +120,17 @@ object AvatarUtil {
         return dest
     }
 
+    /**
+     * Tint image with color
+     *
+     * @param src
+     * @param color
+     * @return image
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     * @see BufferedImage
+     * @see Color
+     */
     fun tintImage(src: BufferedImage, color: Color): BufferedImage {
         val width = src.width
         val height = src.height
@@ -93,6 +146,17 @@ object AvatarUtil {
         return dest
     }
 
+    /**
+     * Plan image
+     *
+     * @param src
+     * @param width
+     * @param height
+     * @return image
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     * @see BufferedImage
+     */
     fun planImage(src: BufferedImage, width: Int, height: Int): BufferedImage {
         val originalWidth = src.width
         val originalHeight = src.height
@@ -109,6 +173,17 @@ object AvatarUtil {
         return dest
     }
 
+    /**
+     * Get complement color
+     *
+     * @param color
+     * @param blackColor
+     * @param whiteColor
+     * @return color
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     * @see Color
+     */
     fun getComplementColor(color: Color, blackColor: Color, whiteColor: Color): Color {
         val rgba = color.getComponents(null)
         val luminance = 0.2126 * rgba[0] + 0.7152 * rgba[1] + 0.0722 * rgba[2]
@@ -117,6 +192,16 @@ object AvatarUtil {
         return if (ratio > 7) blackColor else whiteColor
     }
 
+    /**
+     * Convert to ARGB image
+     *
+     * @param src
+     * @return image
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     * @see Image
+     * @see BufferedImage
+     */
     fun toARGBImage(src: Image): BufferedImage {
         val dest = BufferedImage(src.getWidth(null), src.getHeight(null), BufferedImage.TYPE_INT_ARGB)
         val graphics2D = dest.createGraphics()
@@ -126,6 +211,16 @@ object AvatarUtil {
         return dest
     }
 
+    /**
+     * Save image in temp path
+     *
+     * @param src
+     * @return path
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     * @see BufferedImage
+     * @see Path
+     */
     fun saveImageInTemp(src: BufferedImage): Path {
         try {
             val path = Files.createTempFile("image", ".png")
@@ -137,6 +232,12 @@ object AvatarUtil {
         }
     }
 
+    /**
+     * Pad 0 in front of number
+     *
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     */
     private fun addZeroes(str: String, digits: Int): String {
         var newStr = str
 
@@ -147,12 +248,31 @@ object AvatarUtil {
         return newStr
     }
 
-    fun extractColor(code: Long): Color {
-        val rgb = addZeroes(code.toULong().toString(16), 6).substring(0, 6).toInt(16)
+    /**
+     * Extract color by seed
+     *
+     * @param seed
+     * @return color
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     * @see Color
+     */
+    fun extractColor(seed: Long): Color {
+        val rgb = addZeroes(seed.toULong().toString(16), 6).substring(0, 6).toInt(16)
 
         return Color(rgb)
     }
 
+    /**
+     * Get distance between two color
+     *
+     * @param color1
+     * @param color2
+     * @return float
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     * @see Color
+     */
     fun getColorDistance(color1: Color, color2: Color): Float {
         val dx = (color1.red - color2.red).toDouble()
         val dy = color1.green - color2.green
@@ -161,5 +281,14 @@ object AvatarUtil {
         return sqrt(dx * dx + dy * dy + dz * dz).toFloat()
     }
 
+    /**
+     * Get complementary color
+     *
+     * @param color
+     * @return color
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.0.0
+     * @see Color
+     */
     fun getComplementaryColor(color: Color) = Color(color.rgb xor 0x00FFFFFF)
 }
