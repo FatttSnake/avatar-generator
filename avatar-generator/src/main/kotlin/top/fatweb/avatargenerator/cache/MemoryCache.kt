@@ -30,7 +30,7 @@ class MemoryCache : ICache {
      * @see ILoader
      * @see BufferedImage
      */
-    override fun get(avatarInfo: IAvatarInfo, loader: ICache.ILoader): BufferedImage {
+    override fun get(avatarInfo: IAvatarInfo, loader: ILoader): BufferedImage {
         val key =
             "${avatarInfo.getWidth()}-${avatarInfo.getHeight()}-${avatarInfo.getMargin()}-${avatarInfo.getPadding()}"
 

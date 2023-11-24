@@ -93,9 +93,9 @@ class Avatar private constructor() {
     fun createAsPngBytes(seed: Long): ByteArray {
         val src = create(seed)
         try {
-            ByteArrayOutputStream().use { baos ->
-                ImageIO.write(src, "png", baos)
-                return baos.toByteArray()
+            ByteArrayOutputStream().use { byteArrayOutputStream ->
+                ImageIO.write(src, "png", byteArrayOutputStream)
+                return byteArrayOutputStream.toByteArray()
             }
         } catch (e: IOException) {
             throw AvatarException("Failed to write png for seed=$seed", e)
