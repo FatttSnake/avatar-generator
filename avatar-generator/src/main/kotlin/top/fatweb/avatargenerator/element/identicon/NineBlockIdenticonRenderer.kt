@@ -5,6 +5,7 @@ import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.Shape
 import java.awt.geom.AffineTransform
+import java.awt.geom.Area
 import java.awt.geom.GeneralPath
 import java.awt.geom.Rectangle2D
 import java.awt.image.BufferedImage
@@ -17,15 +18,13 @@ import kotlin.math.floor
  * @since 1.0.0
  */
 open class NineBlockIdenticonRenderer {
-    private val PATCH_GRIDS = 5
-
-    private val DEFAULT_PATCH_SIZE = 20.0f
-
-    private val PATCH_SYMMETRIC: Byte = 1
-
-    private val PATCH_INVERTED: Byte = 2
-
-    private val PATCH_MOVETO = -1
+    companion object {
+        private const val PATCH_GRIDS = 5
+        private const val DEFAULT_PATCH_SIZE = 20.0f
+        private const val PATCH_SYMMETRIC: Byte = 1
+        private const val PATCH_INVERTED: Byte = 2
+        private const val PATCH_MOVETO = -1
+    }
 
     private val patch0 = byteArrayOf(0, 4, 24, 20)
 
@@ -66,8 +65,7 @@ open class NineBlockIdenticonRenderer {
     private val patchFlags = byteArrayOf(
         PATCH_SYMMETRIC, 0, 0, 0,
         PATCH_SYMMETRIC, 0, 0, 0, PATCH_SYMMETRIC, 0, 0, 0, 0, 0, 0,
-        (
-            PATCH_SYMMETRIC + PATCH_INVERTED).toByte()
+        (PATCH_SYMMETRIC + PATCH_INVERTED).toByte()
     )
 
     private val centerPatchTypes = intArrayOf(0, 4, 8, 15)
@@ -82,24 +80,24 @@ open class NineBlockIdenticonRenderer {
      * @author FatttSnake, fatttsnake@gmail.com
      * @since 1.0.0
      */
-    var patchSize = 0f
+    private var patchSize = 0f
         set(value) {
             field = value
             this.patchOffset = value / 2.0f
             val patchScale = value / 4.0f
 
-            patchShapes = arrayOfNulls(this.patchTypes.size)
+            patchShapes = arrayOfNulls(patchTypes.size)
             for (i in this.patchTypes.indices) {
                 val patch = GeneralPath(GeneralPath.WIND_NON_ZERO)
                 var moveTo = true
-                val patchVertices: ByteArray = this.patchTypes[i]
+                val patchVertices = this.patchTypes[i]
                 for (j in patchVertices.indices) {
                     val v = patchVertices[j].toInt()
-                    if (v == this.PATCH_MOVETO) {
+                    if (v == PATCH_MOVETO) {
                         moveTo = true
                     }
-                    val vx: Float = v % this.PATCH_GRIDS * patchScale - patchOffset
-                    val vy = floor((v.toFloat() / this.PATCH_GRIDS).toDouble()).toFloat() * patchScale - patchOffset
+                    val vx = v % PATCH_GRIDS * patchScale - patchOffset
+                    val vy = floor((v.toFloat() / PATCH_GRIDS).toDouble()).toFloat() * patchScale - patchOffset
                     if (!moveTo) {
                         patch.lineTo(vx, vy)
                     } else {
@@ -111,14 +109,6 @@ open class NineBlockIdenticonRenderer {
                 patchShapes[i] = patch
             }
         }
-
-    /**
-     * Background color of nine block
-     *
-     * @author FatttSnake, fatttsnake@gmail.com
-     * @since 1.0.0
-     */
-    var backgroundColor = Color.WHITE
 
     init {
         patchSize = DEFAULT_PATCH_SIZE
@@ -136,8 +126,8 @@ open class NineBlockIdenticonRenderer {
      */
     fun render(seed: Int, size: Int) = renderQuilt(seed, size)
 
-    protected fun renderQuilt(seed: Int, size: Int): BufferedImage {
-        val middleType: Int = this.centerPatchTypes[seed and 0x3]
+    private fun renderQuilt(seed: Int, size: Int): BufferedImage {
+        val middleType = centerPatchTypes[seed and 0x3]
         val middleInvert = seed shr 2 and 0x1 != 0
         val cornerType = seed shr 3 and 0x0f
         val cornerInvert = seed shr 7 and 0x1 != 0
@@ -151,59 +141,51 @@ open class NineBlockIdenticonRenderer {
 
         val fillColor = Color(red shl 3, green shl 3, blue shl 3)
 
-        var strokeColor: Color? = null
-        if (AvatarUtil.getColorDistance(fillColor, backgroundColor) < 32.0f) {
-            strokeColor = AvatarUtil.getComplementaryColor(fillColor)
-        }
-
         val targetImage = BufferedImage(
             size, size,
-            BufferedImage.TYPE_INT_RGB
+            BufferedImage.TYPE_INT_ARGB
         )
         val graphics2D = targetImage.createGraphics()
         AvatarUtil.activeAntialiasing(graphics2D)
-
-        graphics2D.background = backgroundColor
-        graphics2D.clearRect(0, 0, size, size)
 
         val blockSize = size / 3.0f
         val blockSize2 = blockSize * 2.0f
 
         drawPatch(
             graphics2D, blockSize, blockSize, blockSize, middleType, 0,
-            middleInvert, fillColor, strokeColor
+            middleInvert, fillColor
         )
         drawPatch(
             graphics2D, blockSize, 0f, blockSize, sideType, sideTurn++, sideInvert,
-            fillColor, strokeColor
+            fillColor
         )
         drawPatch(
             graphics2D, blockSize2, blockSize, blockSize, sideType, sideTurn++,
-            sideInvert, fillColor, strokeColor
+            sideInvert, fillColor
         )
         drawPatch(
             graphics2D, blockSize, blockSize2, blockSize, sideType, sideTurn++,
-            sideInvert, fillColor, strokeColor
+            sideInvert, fillColor
         )
         drawPatch(
             graphics2D, 0f, blockSize, blockSize, sideType, sideTurn++, sideInvert,
-            fillColor, strokeColor
+            fillColor
         )
         drawPatch(
             graphics2D, 0f, 0f, blockSize, cornerType, cornerTurn++, cornerInvert,
-            fillColor, strokeColor
+            fillColor
         )
         drawPatch(
             graphics2D, blockSize2, 0f, blockSize, cornerType, cornerTurn++,
-            cornerInvert, fillColor, strokeColor
+            cornerInvert, fillColor
         )
         drawPatch(
             graphics2D, blockSize2, blockSize2, blockSize, cornerType,
-            cornerTurn++, cornerInvert, fillColor, strokeColor
+            cornerTurn++, cornerInvert, fillColor
         )
         drawPatch(
             graphics2D, 0f, blockSize2, blockSize, cornerType, cornerTurn++,
-            cornerInvert, fillColor, strokeColor
+            cornerInvert, fillColor
         )
 
         graphics2D.dispose()
@@ -219,8 +201,7 @@ open class NineBlockIdenticonRenderer {
         patch: Int,
         turn: Int,
         invert: Boolean,
-        fillColor: Color,
-        strokeColor: Color?
+        fillColor: Color
     ) {
         assert(patch >= 0)
         assert(turn >= 0)
@@ -228,7 +209,7 @@ open class NineBlockIdenticonRenderer {
         val patchProcessed = patch % this.patchTypes.size
         val turnProcessed = turn % 4
         val invertProcessed =
-            if (this.patchFlags[patchProcessed].toInt() and this.PATCH_INVERTED.toInt() != 0) {
+            if (this.patchFlags[patchProcessed].toInt() and PATCH_INVERTED.toInt() != 0) {
                 !invert
             } else {
                 invert
@@ -238,22 +219,16 @@ open class NineBlockIdenticonRenderer {
         val scale = size.toDouble() / patchSize.toDouble()
         val offset = size / 2.0f
 
-        graphics2D.color = if (invertProcessed) fillColor else backgroundColor
-        graphics2D.fill(Rectangle2D.Float(x, y, size, size))
-
-        val transform: AffineTransform = graphics2D.transform
-        graphics2D.translate((x + offset).toDouble(), (y + offset).toDouble())
-        graphics2D.scale(scale, scale)
-        graphics2D.rotate(Math.toRadians((turnProcessed * 90).toDouble()))
-
-        if (strokeColor != null) {
-            graphics2D.color = strokeColor
-            graphics2D.draw(shape)
+        val mask = Area(Rectangle2D.Float(x, y, size, size))
+        val hollow = Area(shape).apply {
+            transform(AffineTransform().apply {
+                translate((x + offset).toDouble(), (y + offset).toDouble())
+                scale(scale, scale)
+                rotate(Math.toRadians((turnProcessed * 90).toDouble()))
+            })
         }
-
-        graphics2D.color = if (invertProcessed) backgroundColor else fillColor
-        graphics2D.fill(shape)
-
-        graphics2D.transform = transform
+        mask.subtract(hollow)
+        graphics2D.color = fillColor
+        graphics2D.fill(if (invertProcessed) mask else hollow)
     }
 }

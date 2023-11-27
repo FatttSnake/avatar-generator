@@ -11,6 +11,8 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import javax.imageio.ImageIO
+import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
 import kotlin.random.Random
 
 /**
@@ -93,9 +95,9 @@ class Avatar private constructor() {
     fun createAsPngBytes(seed: Long): ByteArray {
         val src = create(seed)
         try {
-            ByteArrayOutputStream().use { baos ->
-                ImageIO.write(src, "png", baos)
-                return baos.toByteArray()
+            ByteArrayOutputStream().use { byteArrayOutputStream ->
+                ImageIO.write(src, "png", byteArrayOutputStream)
+                return byteArrayOutputStream.toByteArray()
             }
         } catch (e: IOException) {
             throw AvatarException("Failed to write png for seed=$seed", e)
@@ -118,6 +120,17 @@ class Avatar private constructor() {
         } catch (e: IOException) {
             throw AvatarException("Failed to write png for seed=$seed", e)
         }
+    }
+
+    /**
+     * Create avatar as base64 string
+     *
+     * @author FatttSnake, fatttsnake@gmail.com
+     * @since 1.1.0
+     */
+    @OptIn(ExperimentalEncodingApi::class)
+    fun createAsBase64(seed: Long): String {
+        return Base64.encode(createAsPngBytes(seed))
     }
 
     private fun buildAll(avatarInfo: IAvatarInfo): BufferedImage {
