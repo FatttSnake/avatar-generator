@@ -28,13 +28,13 @@ implementation group: 'top.fatweb', name: 'avatar-generator', version: '1.0.0'
 ### Gradle (Short)
 
 ```groovy
-implementation 'com.talanlabs:avatar-generator:1.1.0'
+implementation 'top.fatweb:avatar-generator:1.0.0'
 ```
 
 ### Gradle (Kotlin)
 
 ```kotlin
-implementation("com.talanlabs:avatar-generator:1.1.0")
+implementation("top.fatweb:avatar-generator:1.0.0")
 ```
 
 ## Usage
