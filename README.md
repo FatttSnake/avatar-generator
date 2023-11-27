@@ -1,7 +1,16 @@
-# Avatar Generator in Kotlin
+<div align="center">
+  <h1>Avatar Generator in Kotlin</h1>
+  <a href='https://ci.fatweb.top/job/Avatar%20Generator/'>
+    <img alt="Build" src='https://ci.fatweb.top/job/Avatar%20Generator/badge/icon'>
+  </a>
+  <a href="https://github.com/FatttSnake/avatar-generator/releases/latest">
+    <img alt="Release" src="https://img.shields.io/github/v/release/FatttSnake/avatar-generator">
+  </a>
+  <a href="LICENSE">
+    <img alt="License" src="https://img.shields.io/github/license/FatttSnake/avatar-generator">
+  </a>
+</div>
 
-![Release](https://img.shields.io/github/v/release/FatttSnake/avatar-generator)
-![License](https://img.shields.io/github/license/FatttSnake/avatar-generator)
 ---
 
 ![image](doc/main.png)
@@ -15,26 +24,26 @@
 <dependency>
     <groupId>top.fatweb</groupId>
     <artifactId>avatar-generator</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
 ### Gradle
 
 ```groovy
-implementation group: 'top.fatweb', name: 'avatar-generator', version: '1.0.0'
+implementation group: 'top.fatweb', name: 'avatar-generator', version: '1.1.0'
 ```
 
 ### Gradle (Short)
 
 ```groovy
-implementation 'com.talanlabs:avatar-generator:1.1.0'
+implementation 'top.fatweb:avatar-generator:1.1.0'
 ```
 
 ### Gradle (Kotlin)
 
 ```kotlin
-implementation("com.talanlabs:avatar-generator:1.1.0")
+implementation("top.fatweb:avatar-generator:1.1.0")
 ```
 
 ## Usage
@@ -90,6 +99,7 @@ avatar.create...()
 | create(code: Long): BufferedImage         | Create avatar as BufferedImage        |
 | createAsPngBytes(code: Long): ByteArray   | Create avatar as Png ByteArray        |
 | createAsPngToFile(code: Long, file: File) | Create avatar as Png and save to file |
+| createAsBase64(code: Long): String        | Create avatar as Base64 string        |
 
 ##### Java
 
@@ -162,7 +172,7 @@ val bufferedImage = avatar.create(seed)
 
 ```java
 Avatar avatar=TriangleAvatar.newAvatarBuilder().build();
-        BufferedImage bufferedImage=avatar.create(seed);
+BufferedImage bufferedImage=avatar.create(seed);
 ```
 
 ### Square
@@ -181,7 +191,7 @@ val bufferedImage = avatar.create(seed)
 
 ```java
 Avatar avatar=SquareAvatar.newAvatarBuilder().build();
-        BufferedImage bufferedImage=avatar.create(seed);
+BufferedImage bufferedImage=avatar.create(seed);
 ```
 
 ### Identicon
@@ -200,7 +210,7 @@ val bufferedImage = avatar.create(seed)
 
 ```java
 Avatar avatar=IdenticonAvatar.newAvatarBuilder().build();
-        BufferedImage bufferedImage=avatar.create(seed);
+BufferedImage bufferedImage=avatar.create(seed);
 ```
 
 ### GitHub
@@ -219,12 +229,28 @@ val bufferedImage = avatar.create(seed)
 
 ```java
 Avatar avatar=GitHubAvatar.newAvatarBuilder().build();
-        BufferedImage bufferedImage=avatar.create(seed);
+BufferedImage bufferedImage=avatar.create(seed);
 ```
 
-## Related projects
+## Add background
 
----
+![image](doc/identicon_background.png)
+
+#### Kotlin
+```kotlin
+val seed = (Long.MIN_VALUE..Long.MAX_VALUE).random()
+val avatar = IdenticonAvatar.newAvatarBuilder().layers(ColorPaintBackgroundLayer(Color.WHITE)).build()
+val bufferedImage = avatar.create(seed)
+```
+
+#### Java
+```java
+Avatar avatar=IdenticonAvatar.newAvatarBuilder().layers(new ColorPaintBackgroundLayer(Color.WHITE)).build();
+BufferedImage bufferedImage=avatar.create(seed);
+```
+
+
+## Related projects
 
 + [Avatar Generator](https://github.com/gabrie-allaigre/avatar-generator) - An avatar generator written in Java, but it
   has not been updated for a long time and has certain problems. Current project refers to it, rewrites it in Kotlin,

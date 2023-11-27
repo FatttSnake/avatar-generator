@@ -31,6 +31,12 @@ object IdenticonAvatar {
      * @see NineBlockIdenticonRenderer
      * @see Avatar.AvatarBuilder
      */
+    @Deprecated(
+        message = "Redundant method", replaceWith = ReplaceWith(
+            "IdenticonAvatar.newAvatarBuilder()",
+            "top.fatweb.avatargenerator.IdenticonAvatar"
+        )
+    )
     @JvmStatic
     fun newAvatarBuilder(nineBlockIdenticonRenderer: NineBlockIdenticonRenderer) =
         Avatar.newBuilder().elementRegistry(IdenticonElementRegistry(nineBlockIdenticonRenderer))
