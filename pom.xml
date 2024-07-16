@@ -54,7 +54,7 @@
 
     <ciManagement>
         <system>jenkins-ci</system>
-        <url>https://ci.fatweb.top/job/avatar-generator</url>
+        <url>https://ci.fatweb.top/job/Avatar%20Generator</url>
     </ciManagement>
 
     <issueManagement>

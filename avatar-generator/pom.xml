@@ -9,6 +9,7 @@
 
     <name>Avatar generator</name>
     <artifactId>avatar-generator</artifactId>
+    <url>https://github.com/FatttSnake/avatar-generator</url>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
