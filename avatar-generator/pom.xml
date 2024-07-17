@@ -11,6 +11,12 @@
     <artifactId>avatar-generator</artifactId>
     <url>https://github.com/FatttSnake/avatar-generator</url>
 
+    <scm>
+        <url>https://github.com/FatttSnake/avatar-generator</url>
+        <connection>scm:git:https://github.com/FatttSnake/avatar-generator.git</connection>
+        <tag>HEAD</tag>
+    </scm>
+
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
