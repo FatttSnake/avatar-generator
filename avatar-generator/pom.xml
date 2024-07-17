@@ -4,12 +4,18 @@
     <parent>
         <groupId>top.fatweb</groupId>
         <artifactId>avatar-generator-parent</artifactId>
-        <version>1.1.1</version>
+        <version>1.1.2</version>
     </parent>
 
     <name>Avatar generator</name>
     <artifactId>avatar-generator</artifactId>
     <url>https://github.com/FatttSnake/avatar-generator</url>
+
+    <scm>
+        <url>https://github.com/FatttSnake/avatar-generator</url>
+        <connection>scm:git:https://github.com/FatttSnake/avatar-generator.git</connection>
+        <tag>1.1.2</tag>
+    </scm>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
